@@ -17,10 +17,18 @@
         }
     ],
 
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/danchukas/gherkin.git"
+        }
+    ],
+
+
     "require": {
         "php": ">=7.1",
         "ext-mbstring": "*",
-        "danchukas/gherkin": "dev-master@dev",
+        "behat/gherkin": "dev-master@dev",
         "behat/transliterator": "^1.2",
         "symfony/console": "~2.5||~3.0",
         "symfony/config": "~2.3||~3.0",
