@@ -71,12 +71,55 @@ final class RuntimeStepTester implements StepTester
         try {
             $search = $this->searchDefinition($env, $feature, $step);
             $result = $this->testDefinition($env, $feature, $step, $search, $skip);
+            $result = $this->innerStep($result, $env, $feature, $step, $skip);
         } catch (SearchException $exception) {
             $result = new FailedStepSearchResult($exception);
         }
 
+
+
         return $result;
     }
+
+
+    private function innerStep($result, Environment $env, FeatureNode $feature, StepNode $step, $skip = false)
+    {
+        if (\method_exists($result, 'getException')
+            && null !== $result->getException()
+        ) {
+            $volk = $result->getException()->getMessage();
+            $volk = @\unserialize($volk);
+            if (is_array($volk)) {
+                foreach ($volk as $inner_step) {
+                    $inner_step = new StepNode(
+                        $step->getKeyword(),
+                        $inner_step,
+                        $step->getArguments(),
+                        $step->getLine(),
+                        $step->getKeywordType()
+                    );
+                    $result = $this->test($env, $feature, $inner_step, $skip);
+
+                    if (!$result->isPassed()) {
+                        if (\method_exists($result, 'getException')
+                            && null !== $result->getException()
+                        ) {
+                            $volk = $result->getException()->getMessage();
+                            $volk = @\unserialize($volk);
+                            if (!is_array($volk)) {
+                                continue;
+                            }
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
 
     /**
      * {@inheritdoc}
