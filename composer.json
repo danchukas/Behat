@@ -60,5 +60,12 @@
         }
     },
 
-    "bin": ["bin/behat"]
+    "bin": ["bin/behat"],
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.4.x-dev"
+        }
+    }
+
 }
