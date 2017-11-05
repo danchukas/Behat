@@ -20,7 +20,7 @@
     "require": {
         "php": ">=7.1",
         "ext-mbstring": "*",
-        "danshukas/gherkin": "dev-master@dev",
+        "danchukas/gherkin": "dev-master@dev",
         "behat/transliterator": "^1.2",
         "symfony/console": "~2.5||~3.0",
         "symfony/config": "~2.3||~3.0",
