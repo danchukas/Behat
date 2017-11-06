@@ -101,18 +101,8 @@ final class RuntimeStepTester implements StepTester
                     $result = $this->test($env, $feature, $inner_step, $skip);
 
                     if (!$result->isPassed()) {
-                        if (\method_exists($result, 'getException')
-                            && null !== $result->getException()
-                        ) {
-                            $volk = $result->getException()->getMessage();
-                            $volk = @\unserialize($volk);
-                            if (!is_array($volk)) {
-                                continue;
-                            }
-                        }
+                        break;
                     }
-
-                    break;
                 }
             }
         }
